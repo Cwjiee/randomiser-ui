@@ -15,7 +15,7 @@
 	<svelte:fragment slot="header">
     <AppBar>
       <svelte:fragment slot="lead">
-        Randomiser
+        <strong class="text-lg">Randomiser</strong>
       </svelte:fragment>
     </AppBar>
   </svelte:fragment>
