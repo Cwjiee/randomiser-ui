@@ -8,24 +8,20 @@
   // Finally, your application's global stylesheet (sometimes labeled 'app.css')
   import '../app.postcss';		
   import { AppShell, AppBar } from '@skeletonlabs/skeleton';
-  import List from '../components/List.svelte';
 </script>
+
 
 <AppShell>
 	<svelte:fragment slot="header">
     <AppBar>
       <svelte:fragment slot="lead">
-        <strong class="text-lg">Randomiser</strong>
+          <strong class="text-lg">Randomiser</strong>
       </svelte:fragment>
     </AppBar>
   </svelte:fragment>
-	<svelte:fragment slot="sidebarLeft">
-    <div class="h-full grid grid-rows-[auto_1fr_auto] gap-1">
-      <List />
-    </div>
-  </svelte:fragment>	
+	<svelte:fragment slot="sidebarLeft"></svelte:fragment>
+	<svelte:fragment slot="sidebarRight"></svelte:fragment>
+	<svelte:fragment slot="pageHeader"></svelte:fragment>
+	<!-- Router Slot -->
 	<slot />
-	<!-- ---- / ---- -->
-	<svelte:fragment slot="pageFooter"></svelte:fragment>
-	<!-- (footer) -->
 </AppShell>
