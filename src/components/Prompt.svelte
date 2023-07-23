@@ -9,7 +9,7 @@
   async function addMessage(e){
 
     e.preventDefault();
-    const res = await fetch(`http://localhost:3000/users/${$currentUser.id}/add_message`, {
+    await fetch(`http://localhost:3000/users/${$currentUser.id}/add_message`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
