@@ -6,7 +6,9 @@ export const messageStore = writable({});
 export const userStore = writable({});
 
 export const connectCurrentUser = () => {
-  currentUser.set(JSON.parse(localStorage.getItem('currentUser')) || {})
+  const name = JSON.parse(localStorage.getItem('currentUser')).name || {};
+  const data = {name: name};
+  currentUser.set(data);
 }
 
 export const connectMessage = async () => {
@@ -77,6 +79,5 @@ export const connectUsers = async () => {
 
 export default {
   subscribeMessage: messageStore.subscribe,
-  subscribeUser: userStore.subscribe,
-  subscribeCurrentUser: currentUser.subscribe
+  subscribeUser: userStore.subscribe,  
 };

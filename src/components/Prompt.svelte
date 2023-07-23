@@ -1,15 +1,21 @@
 <script>
-	import { currentUser } from "../lib/stores";
+	import { onMount } from "svelte";
+	import { connectCurrentUser, currentUser } from "../lib/stores";
 
   let currentMessage = '';
+  let users = [];
 
-  console.log($currentUser.name)
-  console.log($currentUser.id)
+  onMount( async () => {
+    const res = await fetch('http://localhost:3000/users');
+    users = await res.json();
+  })
 
   async function addMessage(e){
+    connectCurrentUser();
+    const uid = users.find(user => user.username === $currentUser.name).id
 
     e.preventDefault();
-    await fetch(`http://localhost:3000/users/${$currentUser.id}/add_message`, {
+    await fetch(`http://localhost:3000/users/${uid}/add_message`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

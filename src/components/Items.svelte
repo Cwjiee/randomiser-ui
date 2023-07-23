@@ -17,17 +17,19 @@
 
 </script>
 
-<ul class="list">
-  {#each users as user}
-    {#each items as item}
-      {#if user.id === item.user_id}
-        <li>
-          <span class="flex-auto">{item.content}</span>
-        </li>
-      {/if}
+<div class="grid grid-rows-[auto_1fr] gap-2">
+  <ul class="list">
+    {#each users as user}
+      {#each items as item}
+        {#if user.id === item.user_id}
+          <li>
+            <span class="flex-auto">{item.content}</span>
+          </li>
+        {/if}
+      {/each}
     {/each}
-  {/each}
-</ul>
+  </ul>
+</div>
 
 <!-- {#if items}
  {#each items as item}

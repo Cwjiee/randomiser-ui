@@ -1,20 +1,19 @@
 <script>
   import { onMount } from 'svelte';
   import { currentUser, connectUsers, connectCurrentUser } from '../lib/stores';
-  import store from '../lib/stores';
 
   let users = [];
 
   onMount( async () => {
     const res = await fetch('http://localhost:3000/users');
     users = await res.json();
+
     connectCurrentUser();
     connectUsers();
-    // store.subscribeUser((currentUsers) => {
-    //   users = [...users, currentUsers]
-    // });
-    console.log(users)
-    console.log($currentUser.name)
+
+    // const uid = users.find(user => user.username === $currentUser.name).id;
+    // currentUser.set({id: uid, name: $currentUser.name});
+    // console.log($currentUser.id)
   })
 </script>
 
