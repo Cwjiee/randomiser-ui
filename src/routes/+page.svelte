@@ -1,13 +1,12 @@
 <script>
   import { focusTrap } from '@skeletonlabs/skeleton';
-  import { currentUser } from '../lib/stores';
 
   let name = '';
 
   async function addUser(e){
     localStorage.setItem("currentUser", JSON.stringify({name: name}));
     e.preventDefault();
-    await fetch(`http://localhost:3000/users`, {
+    await fetch('http://localhost:3000/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

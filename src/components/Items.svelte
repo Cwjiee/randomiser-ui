@@ -2,22 +2,25 @@
   import { onMount } from "svelte";
   import { connectMessage } from "../lib/stores";
   import store from "../lib/stores";  
+  import { Avatar } from "@skeletonlabs/skeleton";
+  import Users from "./Users.svelte";
 
   let items = [];
-  let users = []
 
   onMount( async () => {
     const res = await fetch('http://localhost:3000/messages');
     items = await res.json();
     connectMessage();
     store.subscribeMessage((currentMessage) => {
-      items = [...items, currentMessage]
+      if (currentMessage.content !== undefined) {
+        items = [...items, currentMessage];
+      }
     });
   })
 
 </script>
 
-<div class="grid grid-rows-[auto_1fr] gap-2">
+<!-- <div class="grid grid-rows-[auto_1fr] gap-2">
   <ul class="list">
     {#each users as user}
       {#each items as item}
@@ -29,21 +32,21 @@
       {/each}
     {/each}
   </ul>
-</div>
+</div> -->
 
-<!-- {#if items}
- {#each items as item}
-   <div class="grid grid-cols-[auto_1fr] gap-2">
-     <Avatar src="" initials="WJ" width="w-12" />
-     <div class="card p-4 variant-soft rounded-tl-none space-y-2">
-       <header class="flex justify-between items-center">
-         <Users {item}/>
-         <small class="opacity-50">{item.created_at}</small>
-       </header>
-       <p>{item.content}</p>
-     </div>
-   </div>
- {/each}
-{/if} -->
+{#each items as item}
+  {#if item}
+    <div class="grid grid-cols-[auto_1fr] gap-2">
+      <Avatar src="" initials="WJ" width="w-12" />
+      <div class="card p-4 variant-soft rounded-tl-none space-y-2">
+        <header class="flex justify-between items-center">
+          <Users {item}/>
+          <small class="opacity-50">{item.created_at}</small>
+        </header>
+        <p>{item.content}</p>
+      </div>
+    </div>
+  {/if}
+{/each}
 
 

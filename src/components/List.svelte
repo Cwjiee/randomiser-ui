@@ -1,19 +1,24 @@
 <script>
   import { onMount } from 'svelte';
   import { currentUser, connectUsers, connectCurrentUser } from '../lib/stores';
+  import store from '../lib/stores';
 
   let users = [];
 
   onMount( async () => {
     const res = await fetch('http://localhost:3000/users');
     users = await res.json();
-
     connectCurrentUser();
     connectUsers();
 
-    // const uid = users.find(user => user.username === $currentUser.name).id;
-    // currentUser.set({id: uid, name: $currentUser.name});
-    // console.log($currentUser.id)
+    store.subscribeUser((currentU) => {
+      console.log(currentU)
+      if(currentU.username !== undefined) {
+        users = [...users, currentU];
+        console.log(users)
+      }
+      console.log(users)
+    });
   })
 </script>
 
@@ -22,7 +27,6 @@
 	<div>
 		<span class="flex-auto">
       {#if user.username === $currentUser.name}
-        <!-- {currentUser.update(user)} -->
 			  <dt class="bg-primary-500 rounded-xl text-center">{user.username}</dt>
       {:else}
         <dt>{user.username}</dt>

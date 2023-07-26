@@ -63,8 +63,8 @@ export const connectUsers = async () => {
     if(data.type === 'confirm_subscription') return;
     if(data.type === 'welcome') return;
 
-    console.log(data);
-    userStore.set(data);
+    console.log(data.message);
+    userStore.set(data.message);
     
   });
   
