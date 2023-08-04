@@ -1,52 +1,57 @@
 <script>
   import { onMount } from "svelte";
-  import { connectMessage } from "../lib/stores";
+  import { connectCurrentUser, connectMessage } from "../lib/stores";
   import store from "../lib/stores";  
   import { Avatar } from "@skeletonlabs/skeleton";
-  import Users from "./Users.svelte";
 
   let items = [];
+  let users = [];
 
   onMount( async () => {
-    const res = await fetch('http://localhost:3000/messages');
-    items = await res.json();
+    const resMessage = await fetch('http://localhost:3000/messages');
+    items = await resMessage.json();
+
+    const resUsers = await fetch('http://localhost:3000/users');
+    users = await resUsers.json();
+    console.log(users)
+
     connectMessage();
+    connectCurrentUser();
+
     store.subscribeMessage((currentMessage) => {
       if (currentMessage.content !== undefined) {
         items = [...items, currentMessage];
+        console.log(items)
+      }
+    });
+
+    store.subscribeUser((currentU) => {
+      console.log(currentU)
+      if(currentU.username !== undefined) {
+        users = [...users, currentU];
       }
     });
   })
 
 </script>
 
-<!-- <div class="grid grid-rows-[auto_1fr] gap-2">
-  <ul class="list">
-    {#each users as user}
-      {#each items as item}
-        {#if user.id === item.user_id}
-          <li>
-            <span class="flex-auto">{item.content}</span>
-          </li>
+{#each items as item}
+    <div class="grid grid-cols-[auto_1fr] gap-2">
+      {#each users as user}
+        {#if user}
+          {#if user.id === item.user_id}
+            <Avatar src="" initials="{user.username.split(" ").map((n) => n[0]).join("")}" width="w-12" />
+            <div class="card p-4 variant-soft rounded-tl-none space-y-2">
+              <header class="flex justify-between items-center">
+                    <p class="font-bold">{user.username}</p>
+                <small class="opacity-50">{item.created_at}</small>
+              </header>
+              <p>{item.content}</p>
+            </div>
+          {/if}
         {/if}
       {/each}
-    {/each}
-  </ul>
-</div> -->
-
-{#each items as item}
-  {#if item}
-    <div class="grid grid-cols-[auto_1fr] gap-2">
-      <Avatar src="" initials="WJ" width="w-12" />
-      <div class="card p-4 variant-soft rounded-tl-none space-y-2">
-        <header class="flex justify-between items-center">
-          <Users {item}/>
-          <small class="opacity-50">{item.created_at}</small>
-        </header>
-        <p>{item.content}</p>
-      </div>
     </div>
-  {/if}
 {/each}
 
 

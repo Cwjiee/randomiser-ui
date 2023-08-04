@@ -15,9 +15,7 @@
       console.log(currentU)
       if(currentU.username !== undefined) {
         users = [...users, currentU];
-        console.log(users)
       }
-      console.log(users)
     });
   })
 </script>
