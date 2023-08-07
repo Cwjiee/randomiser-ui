@@ -11,9 +11,9 @@
     import UserList from '../../components/UserList.svelte';
 </script>
   
-<AppShell>
-    <svelte:fragment slot="sidebarLeft">
-        <div class="h-full grid grid-rows-[auto_1fr_auto] gap-1">
+<AppShell slotSidebarLeft="w-1/12">
+    <svelte:fragment slot="sidebarLeft" >
+        <div class="h-full grid grid-rows-[auto_1fr_auto] gap-5">
             <UserList />
         </div>
     </svelte:fragment>	

@@ -4,6 +4,8 @@ import { writable } from "svelte/store";
 export const currentUser = writable({});
 export const messageStore = writable({});
 export const userStore = writable({});
+export const systemMessageSent = writable(false);
+export const systemMessageReceived = writable(0);
 
 export const connectCurrentUser = () => {
   const name = JSON.parse(localStorage.getItem('currentUser')).name || {};
@@ -30,7 +32,6 @@ export const connectMessage = async () => {
     if(data.type === 'confirm_subscription') return;
     if(data.type === 'welcome') return;
 
-    console.log(data.message);
     messageStore.set(data.message);
     
   });
@@ -63,7 +64,6 @@ export const connectUsers = async () => {
     if(data.type === 'confirm_subscription') return;
     if(data.type === 'welcome') return;
 
-    console.log(data.message);
     userStore.set(data.message);
     
   });
